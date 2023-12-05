@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Generate" Width="80" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20" Click="ButtonGenerate_OnClick"></Button>
+        <Button Content="Generate" Width="80" Height="30" HorizontalAlignment="Left" Margin="220, 0" Click="ButtonGenerate_OnClick"></Button>
+        
+        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Margin="145, 140">Enter files count to combine and substring:</TextBlock>
+        <TextBox x:Name="textBox1" Width="50" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="270, 160" BorderBrush="Black"></TextBox>
+        <TextBox x:Name="textBox2" Width="50" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="200, 160" BorderBrush="Black"></TextBox>
+        <Button Content="Combine" Width="80" Height="30" HorizontalAlignment="Right" Margin="220,0" Click="ButtonCombine_OnClick"></Button>
     </Grid>
 </Window>
