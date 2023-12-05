@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Button Content="Generate" Width="80" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20" Click="ButtonGenerate_OnClick"></Button>
     </Grid>
 </Window>

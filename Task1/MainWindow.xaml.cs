@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Helpers;
 
 namespace Task1
 {
@@ -23,6 +12,25 @@ namespace Task1
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+
+        private void ButtonGenerate_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dates = DataGenerator.DateGenerate(100);
+            var enStr = DataGenerator.StrGenerate("en", 10, 100);
+            var ruStr = DataGenerator.StrGenerate("ru", 10, 100);
+            var ints = DataGenerator.IntGenerate(1, 100_000_000, 100);
+            var doubles = DataGenerator.DoubleGenerate(1, 20, 8, 100);
+
+            for (int i = 0; i < 100; i++)
+            {
+                
+                // using (StreamWriter writer = new StreamWriter($"file{i}.txt"))
+                // {
+                //     
+                // }
+            }
         }
     }
 }
