@@ -12,7 +12,7 @@ public static class DataGenerator
 
         for (int i = 0; i < count; i++)
         {
-            int days = rnd.Next(0, 365 * 5);
+            int days = rnd.Next(0, 365 * 4 + 364);
             dates.Add(now.AddDays(-days));
         }
 

@@ -13,5 +13,9 @@
         <TextBox x:Name="textBox1" Width="50" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="270, 160" BorderBrush="Black"></TextBox>
         <TextBox x:Name="textBox2" Width="50" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="200, 160" BorderBrush="Black"></TextBox>
         <Button Content="Combine" Width="80" Height="30" HorizontalAlignment="Right" Margin="220,0" Click="ButtonCombine_OnClick"></Button>
+        
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 165">Enter number of file:</TextBlock>
+        <TextBox x:Name="textBox3" Width="50" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 140" BorderBrush="Black"></TextBox>
+        <Button Content="FileToDB" Width="80" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,100" Click="ButtonFileToDB_OnClick"></Button>
     </Grid>
 </Window>

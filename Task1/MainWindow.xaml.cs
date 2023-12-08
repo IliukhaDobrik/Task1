@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DataLayer;
+using DataLayer.Entities;
 using Helpers;
 
 namespace Task1
@@ -14,8 +15,11 @@ namespace Task1
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly MyDbContext _context;
+        private ProgressWindow _progressWindow;
+        public MainWindow(MyDbContext context)
         {
+            _context = context;
             InitializeComponent();
         }
 
@@ -46,9 +50,16 @@ namespace Task1
 
         private async void ButtonCombine_OnClick(object sender, RoutedEventArgs e)
         {
+            #region Validate
             if (int.TryParse(textBox1.Text, out int filesCount) == false || filesCount > 100 || filesCount < 2)
             {
                 MessageBox.Show("Wrong count! Try again!");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(textBox2.Text))
+            {
+                MessageBox.Show("Wrong substring! Try again!");
                 return;
             }
 
@@ -57,7 +68,8 @@ namespace Task1
                 MessageBox.Show("You dont have generated files!");
                 return;
             }
-
+            #endregion
+            
             var sb = new StringBuilder();
             int countDropLines = 0;
             for (int i = 0; i < filesCount; i++)
@@ -80,6 +92,63 @@ namespace Task1
             }
 
             MessageBox.Show($"Combined! Drop lines count: {countDropLines}");
+        }
+
+        private void ButtonFileToDB_OnClick(object sender, RoutedEventArgs e)
+        {
+            var fileNumber = int.Parse(textBox3.Text);
+            var path = $"files/file{fileNumber}.txt";
+            
+            _progressWindow = new ProgressWindow();
+            _progressWindow.Show();
+
+            Task.Run(() => ImportFileAsync(path));
+        }
+
+        private async Task ImportFileAsync(string path)
+        {
+            try
+            {
+                var allLines = await File.ReadAllLinesAsync(path);
+
+                int totalLines = allLines.Length;
+                int importedLines = 0;
+
+                foreach (var line in allLines)
+                {
+                    var elements = line.Split("||");
+                    var data = new Data
+                    {
+                        Date = DateTime.Parse(elements[0]),
+                        EnChars = elements[1],
+                        RuChars = elements[2],
+                        IntNumber = int.Parse(elements[3]),
+                        DoubleNumber = double.Parse(elements[4])
+                    };
+
+                    await _context.AddAsync(data);
+                    UpdateProgress(++importedLines, totalLines);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during import: {ex.Message}");
+            }
+            finally
+            {
+                Dispatcher.Invoke(() => _progressWindow.Close());
+                MessageBox.Show("Import complete!");
+            }
+        }
+        
+        private void UpdateProgress(int importedLines, int totalLines)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                _progressWindow.ProgressText.Text = $"Imported: {importedLines} / {totalLines} lines";
+            });
         }
     }
 }
